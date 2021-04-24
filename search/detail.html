@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title id="title"></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <!-- scary MS stuff ahead to prevent that IE runs in "IE=EmulateIE10" mode which cannot run our JS code for some reason -->
+  <meta http-equiv="X-UA-Compatible" content="IE=9"/>
+  <meta content="物性表，原厂物性表，中文物性表，物性表下载，塑料物性表" name="keywords"/>
+  <meta content="百塑网提供五十万份原厂物性表,物性表信息包含:塑料熔指,密度,收缩率,拉伸强度,弯曲强度,,悬壁梁缺口冲击强度,热变形温度,维卡软化温度,透光率,加工参数" name="description"/>
+
+
+  <!-- Bootstrap core CSS -->
+  <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <script src="../bootstrap/js/jquery.min.js" type="text/javascript"></script>
+  <script src="../bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+
+  <script src="navigation.js" type="text/javascript"></script>
+  <script src="../js/lib/underscore-min.js" type="text/javascript"></script>
+  <script src="../js/lib/backbone-min.js" type="text/javascript"></script>
+  <script src="../js/setup.js" type="text/javascript"></script> <!-- customization -->
+  <script src="../js/bs-detail.js" type="text/javascript"></script>
+
+  <!-- Custom styles for this template, i.e. navigation (move this to base.css) -->
+  <link href="../css/bootstrap-base.css" rel="stylesheet"/>
+  <link href="../css/bsbase.css" rel="stylesheet"/>
+
+  <script type="text/javascript">
+  function handleArrowKeys(evt) {
+    evt = (evt) ? evt : ((window.event) ? event : null);
+    if (evt) {
+      switch (evt.keyCode) {
+        case 9:
+        case 33:
+          window.location.href = document.getElementById("nextpage").href;
+          break;
+        case 34:
+          window.location.href = document.getElementById("prevpage").href;
+          break;
+        case 40:
+      }
+    }
+  }
+  document.onkeydown = handleArrowKeys;
+  </script>
+  <script type="text/javascript" src="../bootstrap/js/typeahead.jquery.min.js"></script>
+  <script type="text/javascript">
+     var suggestMatcher = function() {
+       return function opensearch(q, cb) {
+            $.getJSON(suggestUrl + "&q="+ q, function(data) {
+               var parsed = [];
+            for (var i = 0; i < data[0][1].length; i++) {
+                var row = data[0][1][i];
+                if (row) {
+                    parsed[parsed.length] = {
+                        data: [row],
+                        value: row,
+                        result: row
+                    };
+                };
+            };
+            cb(parsed);
+          });
+        };
+      };
+    $(document).ready(function() {
+      $('#query').typeahead({hint:false,highlight:true,minLength:1}, {
+        name: 'states',
+        displayKey: 'value',
+        source: suggestMatcher()
+      });
+    });
+  </script>
+  <style type="text/css">
+    .logo-text-light{
+      color: #e53e3e;
+      font-weight: bold;
+    }
+    #searchresults{
+      margin-top: 10px;
+    }
+    .search-block{
+      height: 40px;
+    }
+    .search-button{
+      margin-bottom: 5px;
+      width: 100px;
+      height: 40px;
+    }
+
+    div.searchItem {
+      padding-top:1.2em;
+      margin-left: 20px;
+      width:100%;
+    }
+    div.searchItem.hidden {
+      display:none;
+    }
+
+    div.searchItem p{
+      margin:2px 2px 2px 2px;
+
+    }
+
+    h4.itemTitle {
+        margin:2px;
+        margin-bottom: 10px;
+        color: #2440b3;
+    }
+    .certLabel{
+      background-color: #e53e3e;
+      margin: 2px 2px 2px 10px;
+      padding: 4px;
+      border-radius: 2px;
+      color: white;
+      font-size: 1rem;
+    }
+    p{
+        font-size: 1.4rem;
+        line-height: 1.58;
+        color: #4d5156;
+        word-wrap: break-word;
+        white-space:pre-wrap;
+    }
+    p.feature{
+      font-size: 1.3rem;
+    }
+    .bs_name_block{
+        margin-top: 2.5rem;
+    }
+      .bs_desc_block{
+          margin-top: 1.5rem;
+      }
+    .bs_tabs_block{
+        margin-top: 2rem;
+    }
+
+    .bs_head_td {
+        background-color: #FECACA;
+    }
+      table{
+          margin-top: 1.5rem;
+      }
+    .bs_tabs_block ul li a{
+        min-width: 80px;
+        font-weight: bold;
+    }
+
+
+      .bs_btn_tabs{
+          position: fixed;
+          bottom: 0;
+          margin-bottom: 10px;
+      }
+      .bs_btn_tab{
+          border-radius: 5px 5px 0px 0px;
+          width: 120px;
+          height: 40px;
+      }
+    .table-hover-cells > tbody > tr > th:hover,
+    .table-hover-cells > tbody > tr > td:hover {
+        background-color: #f5f5f5;
+    }
+
+    .table-hover-cells > tbody > tr > th.active:hover,
+    .table-hover-cells > tbody > tr > td.active:hover,
+    .table-hover-cells > tbody > tr.active > th:hover,
+    .table-hover-cells > tbody > tr.active > td:hover {
+        background-color: #e8e8e8;
+    }
+
+
+      .bs-cell-cert{
+          text-align: center;
+      }
+      .bs-cell-cert a:link{
+          color:#1a0dab;
+          text-decoration:none;
+      }
+    .bs-cell-cert a:visited{
+        color:#1a0dab;
+        text-decoration:underline;
+    }
+    .bs-cell-cert a:hover{
+        color:#1a0dab;
+        text-decoration:underline;
+    }
+
+  </style> <!-- fix for input window -->
+</head>
+
+<body id="yacysearch" onLoad="document.searchform.query.focus();">
+
+  <!-- top navigation -->
+  <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#"><span class="logo-text-light" >百塑</span>网</a>
+      </div>
+
+    </div>
+  </div>
+
+    <div class="row">
+      <div class="col-md-11 col-md-offset-1 main" id="main">
+          <form class="col-md-6 search small " name="searchform" action="#" method="get" accept-charset="UTF-8" style="position:fixed;top:6px;z-index:1052;max-width:500px;">
+            <div class="input-group">
+              <input name="query" id="query" type="text" class="form-control searchinput typeahead  search-block" size="40" maxlength="200" placeholder="请输入产品名、物性、黄卡..." value="" autofocus="autofocus" onFocus="this.select()" onclick="document.getElementById('Enter').innerHTML = '搜索'"/>
+              <span class="input-group-btn">
+                <button id="Enter" name="Enter" class="btn btn-primary search-button " type="submit">搜索</button>
+              </span>
+            </div>
+          </form>
+          <div class="content_header col-md-11">
+              <div class="row bs_name_block">
+                  <h3 class="col-md-2 bs_name ">PSM® HL-301B </h3>
+
+              </div>
+              <div class="row bs_desc_block">
+                  <p class="col-md-6 bs_desc_text  ">PSM® HL-301B是一种热塑性的材料,。 该产品在亚太地区有供货,。 PSM® HL-301B的主要特性为:环保/绿色。</p>
+              </div>
+
+          </div>
+
+          <div class="bs_tabs_block col-md-11 ">
+              <ul class="nav nav-tabs myTabs" role="tablist">
+                  <li id = "first-tab" role="presentation" class="active"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">物性表</a></li>
+                  <li role="presentation"><a href="#certificate"  aria-controls="certificate" role="tab" data-toggle="tab">证书&黄卡</a></li>
+              </ul>
+              <div class="tab-content">
+                  <div role="tabpanel" class="tab-pane in active" id="profile">abc</div>
+                  <div role="tabpanel" class="tab-pane" id="certificate">abssssc</div>
+              </div>
+          </div>
+
+          <div class="col-md-10 bs_btn_tabs text-right">
+              <button class="btn-primary bs_btn_tab">下载物性表</button>
+          </div>
+      </div> <!-- close sidebar -->
+
+    </div> <!-- close row -->
+
+  </div> <!-- close content container -->
+
+
+
+  <!-- modify content according to query url attributes -->
+  <script type="text/javascript">
+      var tables;
+      var certTbCollection;
+      var data ={"name":"PSM® HL-301B","desc":"PSM® HL-301B是一种热塑性的材料。该产品在亚太地区有供货。 PSM® HL-301B的主要特性为:环保/绿色。","properties":[{"name":"物理性能","order":1,"header":[{"name":"物理性能","field":"name"},{"name":"额定值","field":"value"},{"name":"单位","field":"unit"},{"name":"测试方法","field":"testMethod"}],"rows":[{"name":"密度","value":20,"unit":"kg","testMethod":"xxx"},{"name":"密度","value":20,"unit":"kg","testMethod":"xxx"},{"name":"密度","value":20,"unit":"kg","testMethod":"xxx"}]},{"name":"机械性能","order":1,"header":[{"name":"机械性能","field":"name"},{"name":"额定值","field":"value"},{"name":"单位","field":"unit"},{"name":"测试方法","field":"testMethod"}],"rows":[{"name":"密度","value":20,"unit":"kg","testMethod":"xxx"},{"name":"密度","value":20,"unit":"kg","testMethod":"xxx"},{"name":"密度","value":20,"unit":"kg","testMethod":"xxx"}]}],"certs":[{"name":"原厂证书","certList":[{"id":1,"name":"MSDS证书","type":1,"fileUrl":"https://www.w3schools.com//images/myw3schoolsimage.jpg"},{"id":1,"name":"MSDS证书","type":1,"fileUrl":"https://www.w3schools.com//images/myw3schoolsimage.jpg"},{"id":1,"name":"MSDS证书","type":1,"fileUrl":"https://www.w3schools.com//images/myw3schoolsimage.jpg"},{"id":1,"name":"MSDS证书","type":1,"fileUrl":"www.abc.com/abc.pdf"},{"id":1,"name":"MSDS证书","type":1,"fileUrl":"www.abc.com/abc.pdf"}]},{"name":"第三方证书","certList":[{"id":1,"name":"MSDS证书","type":1,"fileUrl":"https://www.w3schools.com//images/myw3schoolsimage.jpg"},{"id":1,"name":"MSDS证书","type":1,"fileUrl":"https://www.w3schools.com//images/myw3schoolsimage.jpg"},{"id":1,"name":"MSDS证书","type":1,"fileUrl":"https://www.w3schools.com//images/myw3schoolsimage.jpg"},{"id":1,"name":"MSDS证书","type":1,"fileUrl":"www.abc.com/abc.pdf"},{"id":1,"name":"MSDS证书","type":1,"fileUrl":"www.abc.com/abc.pdf"}]}]};
+      var profileDiv = document.getElementById("profile");
+      tables = new TablesCollection(data.properties);
+      profileDiv.innerHTML = tables.resultList();
+
+      var certDiv = document.getElementById("certificate");
+      certTbCollection = new CertTBCollection(data.certs);
+      certDiv.innerHTML =  certTbCollection.resultList();
+
+      $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+          // alert("abc")
+          // e.target // newly activated tab
+          // e.relatedTarget // previous active tab
+      });
+
+  </script>
+
+</body>
+</html>
