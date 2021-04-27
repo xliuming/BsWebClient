@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title id="title"></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <!-- scary MS stuff ahead to prevent that IE runs in "IE=EmulateIE10" mode which cannot run our JS code for some reason -->
+  <meta http-equiv="X-UA-Compatible" content="IE=9"/>
+  <meta content="物性表，原厂物性表，中文物性表，物性表下载，塑料物性表" name="keywords"/>
+  <meta content="百塑网提供五十万份原厂物性表,物性表信息包含:塑料熔指,密度,收缩率,拉伸强度,弯曲强度,,悬壁梁缺口冲击强度,热变形温度,维卡软化温度,透光率,加工参数" name="description"/>
+
+  <!-- Ensure proper rendering and touch zooming on mobile devices -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap core CSS -->
+  <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <script src="../bootstrap/js/jquery.min.js" type="text/javascript"></script>
+  <script src="../bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+
+  <script src="navigation.js" type="text/javascript"></script>
+  <script src="../js/lib/underscore-min.js" type="text/javascript"></script>
+  <script src="../js/lib/backbone-min.js" type="text/javascript"></script>
+  <script src="../js/setup.js" type="text/javascript"></script> <!-- customization -->
+  <script src="../js/bscerts.js" type="text/javascript"></script>
+
+  <!-- Custom styles for this template, i.e. navigation (move this to base.css) -->
+  <link href="../css/bootstrap-base.css" rel="stylesheet"/>
+  <link href="../css/bsbase.css" rel="stylesheet"/>
+
+  <script type="text/javascript">
+  function handleArrowKeys(evt) {
+    evt = (evt) ? evt : ((window.event) ? event : null);
+    if (evt) {
+      switch (evt.keyCode) {
+        case 9:
+        case 33:
+          window.location.href = document.getElementById("nextpage").href;
+          break;
+        case 34:
+          window.location.href = document.getElementById("prevpage").href;
+          break;
+        case 40:
+      }
+    }
+  }
+  document.onkeydown = handleArrowKeys;
+  </script>
+  <script type="text/javascript" src="../bootstrap/js/typeahead.jquery.min.js"></script>
+  <script type="text/javascript">
+     var suggestMatcher = function() {
+       return function opensearch(q, cb) {
+            $.getJSON(suggestUrl + "&q="+ q, function(data) {
+               var parsed = [];
+            for (var i = 0; i < data[0][1].length; i++) {
+                var row = data[0][1][i];
+                if (row) {
+                    parsed[parsed.length] = {
+                        data: [row],
+                        value: row,
+                        result: row
+                    };
+                };
+            };
+            cb(parsed);
+          });
+        };
+      };
+    $(document).ready(function() {
+      $('#query').typeahead({hint:false,highlight:true,minLength:1}, {
+        name: 'states',
+        displayKey: 'value',
+        source: suggestMatcher()
+      });
+    });
+  </script>
+  <style type="text/css">
+    .logo-text-light{
+      color: #e53e3e;
+      font-weight: bold;
+    }
+    #searchresults{
+      margin-top: 10px;
+    }
+    .search-block{
+      height: 40px;
+    }
+    .search-button{
+      margin-bottom: 5px;
+      width: 100px;
+      height: 40px;
+    }
+
+    /*For Collapsible Pane*/
+
+    .panel-heading {
+      padding: 0;
+      border:0;
+    }
+    .panel-title>a, .panel-title>a:active{
+      display:block;
+      padding:10px;
+      color:#555;
+      font-size:12px;
+      /*letter-spacing:1px;*/
+      /*word-spacing:3px;*/
+      text-decoration:none;
+    }
+    .panel-heading  a:before {
+      font-family: 'Glyphicons Halflings';
+      content: "\e114";
+      float: right;
+      transition: all 0.5s;
+    }
+    .panel-heading.active a:before {
+      -webkit-transform: rotate(180deg);
+      -moz-transform: rotate(180deg);
+      transform: rotate(180deg);
+    }
+    .panel-body{
+      padding: 0;
+    }
+    .panel{
+      border: none;
+    }
+    .bs-center{
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .bs-right{
+      position: absolute;
+      right: 20px;
+    }
+    /*.bs-left{*/
+      /*position: absolute;*/
+      /*left: 0;*/
+    /*}*/
+    .panel-body div, select{
+      font-size: 12px;
+    }
+    .bs-cell-cert{
+        text-align: center;
+    }
+
+
+    .bs-cell-cert a:link{
+        color:#337ab7;
+        text-decoration:none;
+    }
+    .bs-cell-cert a:visited{
+        color:red;
+        text-decoration:underline;
+    }
+    .bs-cell-cert a:hover{
+        color:#337ab7;
+        text-decoration:underline;
+    }
+    thead > tr > td{
+        font-weight: bold;
+    }
+      .bs-cert-input{
+          height: 40px;
+      }
+    .bs-cert-search-btn{
+        width: 100px;
+        height: 40px;
+    }
+  </style> <!-- fix for input window -->
+</head>
+
+<body id="yacysearch" onLoad="document.searchform.query.focus();">
+
+  <!-- top navigation -->
+  <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#"><span class="logo-text-light" >百塑</span>网</a>
+      </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="../index.html">首页<span class="sr-only">(current)</span></a></li>
+                <li><a href="./index.html">搜物性</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div>
+  </div>
+
+    <div class="row">
+      <div class="col-md-9 col-md-offset-3 main" id="main">
+          <!--<form class="col-md-6 search small " name="searchform" action="#" method="get" accept-charset="UTF-8" style="position:fixed;top:6px;z-index:1052;max-width:500px;">-->
+            <!--<div class="input-group">-->
+              <!--<input name="query" id="query" type="text" class="form-control searchinput typeahead  search-block" size="40" maxlength="200" placeholder="请输入产品名、物性、黄卡..." value="" autofocus="autofocus" onFocus="this.select()" onclick="document.getElementById('Enter').innerHTML = '搜索'"/>-->
+              <!--<span class="input-group-btn">-->
+                <!--<button id="Enter" name="Enter" class="btn btn-primary search-button " type="submit">搜索</button>-->
+              <!--</span>-->
+            <!--</div>-->
+          <!--</form>-->
+
+          <div class="col-md-11  bs-cert-search">
+
+              <div class="input-group">
+                  <div class="input-group-addon">产品牌号</div>
+                  <input type="text" class="form-control bs-cert-input"  placeholder="例：Ultramid® SEG7">
+                  <div class="input-group-addon">产品厂商</div>
+                  <input type="text" class="form-control bs-cert-input"  placeholder="例：德国巴斯夫">
+                  <div class="input-group-addon">产品类别</div>
+                  <input type="text" class="form-control bs-cert-input"  placeholder="例：PA6">
+                  <span class="input-group-btn">
+                <button  name="Enter" class="btn btn-primary bs-cert-search-btn " type="submit">立即查找</button>
+              </span>
+              </div>
+
+          </div>
+          <div id="searchresults" style="clear:both;"></div>
+          <!-- linklist end -->
+          <span id="resNav" class="col-sm-12  col-md-12" style="display: inline;"></span>
+      </div> <!-- close sidebar -->
+      <div class="col-sm-4 col-md-3 sidebar" id="sidebar">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-addon">证书类型</div>
+            <select class="form-control">
+              <option>UL</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <div class="input-group-addon">证书编号</div>
+            <input type="text" class="form-control" id="certType" placeholder="例：E45329">
+          </div>
+
+          <!-- Flammability & Ignition Panel -->
+
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+              <div class="panel panel-default">
+                  <div class="panel-heading active" role="tab" id="headingOne">
+                      <h5 class="panel-title">
+                          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Flammability & Ignition
+                          </a>
+                      </h5>
+                  </div>
+                  <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                      <div class="panel-body">
+                          <div class="form-inline">
+                              <div style="display: inline-flex">
+                                  <div class="input-group-addon bs-left" style="width: 8rem;">阻燃等级</div>
+                                  <select class="form-control bs-center" style="width: auto;" >
+                                      <option>等于</option>
+                                      <option>大于等于</option>
+                                  </select>
+                                  <select class="form-control bs-right" style="width:auto;">
+                                      <option>1</option>
+                                      <option>2</option>
+                                  </select>
+                              </div>
+                          </div>
+                          <div style="display: inline-flex">
+                              <div class="input-group-addon bs-left" style="width: 8rem;">厚度</div>
+                              <select class="form-control bs-center" style="width:auto;">
+                                  <option>等于</option>
+                                  <option>大于等于</option>
+                              </select>
+                              <select class="form-control bs-right" style="width:auto;">
+                                  <option>1</option>
+                                  <option>2</option>
+                              </select>
+                          </div>
+
+                          <div style="display: inline-flex">
+                              <div class="form-control bs-left" style="width: auto;">Hot Wire Ignition (HWI) PLC</div>
+                              <select class="form-control bs-right" style="width:auto; ">
+                                  <option>1</option>
+                                  <option>2</option>
+                              </select>
+                          </div>
+                        <div style="display: inline-flex">
+                            <div class="form-control bs-left" style="width: auto;">High Amp Arc Ignition (HAI) PLC</div>
+                            <select class="form-control bs-right" style="width:auto">
+                                <option>1</option>
+                                <option>2</option>
+                            </select>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="panel-group" id="accordionTwo" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div class="panel-heading active" role="tab" id="headingTwo">
+                <h5 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordionTwo" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                    Relative Temperature Index (RTI) ºC
+                  </a>
+                </h5>
+              </div>
+              <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body" style="display: block">
+
+                  <div style="display: inline-flex">
+                    <div class="form-control bs-left" style="width: 160px;">Electrical Strength</div>
+                    <select class="form-control bs-right" style="width:auto;">
+                      <option>1</option>
+                      <option>2</option>
+                    </select>
+                  </div>
+                  <div style="display: inline-flex">
+                    <div class="form-control bs-left" style="width: 160px;">Mechanical Impact</div>
+                    <select class="form-control bs-right" style="width:auto;">
+                      <option>1</option>
+                      <option>2</option>
+                    </select>
+                  </div>
+                  <div style="display: inline-flex">
+                    <div class="form-control bs-left" style="width: 160px;font-size: 1.2rem">Mechanical Strength</div>
+                    <select class="form-control bs-right" style="width:auto;font-size: 1.2rem">
+                      <option>1</option>
+                      <option>2</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="panel-group" id="accordionThree" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div class="panel-heading active" role="tab" id="headingThree">
+                <h5 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordionTwo" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                    IEC
+                  </a>
+                </h5>
+              </div>
+              <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+                <div class="panel-body">
+                  <div style="display: inline-flex">
+                    <div class="form-control bs-left" style="width: auto; font-size: 1.2rem">Glow-Wire Ignition (GWIT) ºC</div>
+                    <select class="form-control bs-right" style="width:auto; font-size: 1.2rem">
+                      <option>1</option>
+                      <option>2</option>
+                    </select>
+                  </div>
+                  <div style="display: inline-flex">
+                    <div class="form-control bs-left" style="width: auto; font-size: 1.2rem">Glow-Wire Flammability (GWFI) ºC</div>
+                    <select class="form-control bs-right" style="width:auto; font-size: 1.2rem">
+                      <option>1</option>
+                      <option>2</option>
+                    </select>
+                  </div>
+                  <div style="display: inline-flex">
+                    <div class="form-control bs-left" style="width: auto; font-size: 1.2rem">Ball Pressure Temperature (BP) ºC</div>
+                    <select class="form-control bs-right" style="width:auto; font-size: 1.2rem">
+                      <option>1</option>
+                      <option>2</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          </div>
+        </div>
+        <!-- navigation end -->
+
+      </div> <!-- close sidebar -->
+    </div> <!-- close row -->
+  </div> <!-- close content container -->
+
+  <!-- modify content according to query url attributes -->
+  <script type="text/javascript">
+      var tableModel;
+      var resultDiv = document.getElementById("searchresults");
+      tableModel = new CertsTableModel();
+      resultDiv.innerHTML = tableModel.renderTable();
+  </script>
+
+</body>
+</html>

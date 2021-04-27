@@ -73,19 +73,19 @@
       color: #e53e3e;
       font-weight: bold;
     }
-    .starter-template{
-      margin-top: 150px;
+    .bs-img-qrcode{
+      width: 220px;
+      height: 220px;
     }
-    .search-block{
-      height: 50px;
+    .bs-vip-tips{
+      text-align: center;
     }
-    .search-button{
-      width: 100px;
-      height: 50px;
-      margin-bottom: 10px;
-    }
-    .bs-desc-block{
+    .bs-advance-title{
+      padding: 1px 0;
       margin-top: 50px;
+      width: 200px;
+      text-align: center;
+      background-color: #FECACA;
     }
 
   </style> <!-- fix for input window -->
@@ -96,53 +96,46 @@
         <div class="container-fluid">
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
             <a class="navbar-brand" href="#"><span class="logo-text-light" >百塑</span>网</a>
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="./index.html">首页<span class="sr-only">(current)</span></a></li>
-              <li><a href="./search/search-cert.html">搜证书</a></li>
+
             </ul>
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
       </nav>
 
 <div class="container-fluid">`
-  <div class="starter-template">
-    <form class="search form-inline" action="search/index.html" method="get" id="searchform" accept-charset="UTF-8">
-      <fieldset class="maininput">
-        <div class="input-group">
-          <input name="query" id="search" type="text" size="40" maxlength="80" value="" autofocus="autofocus" onFocus="this.select()"
-                 class="form-control searchinput typeahead search-block "
-          placeholder="请输入产品名、物性、黄卡..."/>
-          <div class="input-group-btn">
-            <button id="Enter" name="Enter" class="btn btn-primary search-button" type="submit">搜索</button>
-          </div>
-        </div>
-      </fieldset>
-    </form>
+  
+  <div>
+    <img class="bs-img-qrcode center-block" src="./images/vip-qrcode.jpg">
+    <h3 class="bs-vip-tips">扫码添加客服微信，在线办理会员</h3>
   </div>
-  <div class="row bs-desc-block">
-    <div class="col-md-3 col-md-offset-3">
-      <h2>物性搜索</h2>
-      <p>40多万条物性数据的搜索整合。
-        支持牌号、厂家、种类、品牌模糊搜索。</p>
+
+  <div class="row">
+    <div class="col-md-offset-1">
+      <div class="bs-advance-title">
+        <h1>会员权益</h1>
+      </div>
     </div>
-    <div class="col-md-3 col-md-offset-2">
-      <h2>证书搜索</h2>
-      <p>10万多条权威机构最新检测数据。
-        支持多条件联合模糊搜索，包括:
-        牌号、黄卡编号、种类、防火等级、抗紫外线等属性</p>
+
+    <div class="col-md-3 col-md-offset-1">
+      <h2>物性表下载</h2>
+      <p>百塑网为会员提供上十万种物性表下载。</p>
+    </div>
+    <div class="col-md-3 col-md-offset-1">
+      <h2>证书下载</h2>
+      <p>百塑网为会员提供原厂认证证书，第三方认证证书下载。</p>
+    </div>
+    <div class="col-md-3 col-md-offset-1">
+      <h2>专业客服指导</h2>
+      <p>百塑网有专业客服为会员解答物性搜索，证书下载等方面的问题。</p>
     </div>
   </div>
+
 </div>
 <!-- modify content according to query url attributes -->
 <script type="text/javascript">
