@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/BsWebClient.iml" filepath="$PROJECT_DIR$/.idea/BsWebClient.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/yacy_webclient_bootstrap-gh-pages.iml" filepath="$PROJECT_DIR$/.idea/yacy_webclient_bootstrap-gh-pages.iml" />
     </modules>
   </component>

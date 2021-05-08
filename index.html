@@ -87,6 +87,10 @@
     .bs-desc-block{
       margin-top: 50px;
     }
+    .bs_main_icon{
+      color: #e53e3e;
+      margin-right: 4px;
+    }
 
   </style> <!-- fix for input window -->
 </head>
@@ -96,22 +100,14 @@
         <div class="container-fluid">
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
             <a class="navbar-brand" href="#"><span class="logo-text-light" >百塑</span>网</a>
           </div>
-
-          <!-- Collect the nav links, forms, and other content for toggling -->
-          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="./index.html">首页<span class="sr-only">(current)</span></a></li>
-              <li><a href="./search/search-cert.html">搜证书</a></li>
-            </ul>
-          </div><!-- /.navbar-collapse -->
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="./index.html">首页<span class="sr-only">(current)</span></a></li>
+            <li><a href="./search/search-cert.html">搜证书</a></li>
+          </ul>
+          <ul id="bs-nav-user" class="nav navbar-nav navbar-right bs_user_block">
+          </ul>
         </div><!-- /.container-fluid -->
       </nav>
 
@@ -146,6 +142,23 @@
 </div>
 <!-- modify content according to query url attributes -->
 <script type="text/javascript">
+
+    var loginPageUrl = "";
+
+    function showUserView(){
+        var userHtml =
+          "<li><a href=\"#\"><span class=\"glyphicon glyphicon-heart bs_main_icon\"></span>升级会员</a></li>\n" +
+          "<li><a href=\"#\"><span class=\"glyphicon glyphicon-user bs_main_icon\"></span>个人中心</a></li>"
+
+        document.getElementById("bs-nav-user").innerHTML = userHtml;
+    }
+    function showLoginView(){
+        var loginHtml =
+          "<button class=\"btn btn-danger navbar-btn\">登录</button>";
+        document.getElementById("bs-nav-user").innerHTML = loginHtml;
+    }
+    showUserView();
+    // showLoginView();
 
 </script>
 </body>
